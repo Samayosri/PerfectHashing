@@ -45,7 +45,8 @@ public class SquareHash implements HashTable {
 
     private void doubleSize(){
         n *=2;
-        //System.out.println("size now doubled  = "+ n);
+        System.out.println("Square Hash");
+        System.out.println("size now doubled  = "+ n);
     }
     public void printHashCode(){
         for(BigInteger b : hashCode){
@@ -55,6 +56,7 @@ public class SquareHash implements HashTable {
         for(BigInteger b : hashCode){
             System.out.println(b.toString(2));
         }
+
     }
 
     public void setSizes(){
@@ -72,9 +74,10 @@ public class SquareHash implements HashTable {
             BigInteger newBig=new BigInteger(360,random);
             hashCode.add(newBig);
         }
-//        printHashCode();
-//        System.out.println(n);
-//        System.out.println(tableSize);
+        //printHashCode();
+        System.out.println("Square Hash");
+        System.out.println(n);
+        System.out.println(tableSize);
     }
 
 
@@ -93,13 +96,15 @@ public class SquareHash implements HashTable {
                 }
                 else{
                     table[hashed]=key.getKey();
+                    System.out.println("Square Hash");
+                    System.out.println("Key "+key.getKey()+" has rep "+key.getBitRepresentation().toString(10)+" index : "+ hashed);
                     collision = false;
                 }
             }
 
         }while(collision);
-
-       // System.out.println("rehash has just occured size is : "+ n+"number keys = "+keys.size());
+        System.out.println("Square Hash");
+       System.out.println("rehash has just occured size is : "+ n+"number keys = "+keys.size());
 
     }
 
@@ -112,7 +117,6 @@ public class SquareHash implements HashTable {
             int count=tmpBigInt.bitCount();
             result = (result << 1) | count % 2;
         }
-       // System.out.println("Key "+Bit.getKey()+" has rep "+Bit.getBitRepresentation().toString(10)+" index : "+ result);
         return result;
     }
 
@@ -126,8 +130,11 @@ public class SquareHash implements HashTable {
         if(key==null) return false;
         BitRepresntaion bitRepresntaion = new BitRepresntaion(key);
         int index = hash(bitRepresntaion);
+        System.out.println("Square Hash");
+        System.out.println("Key "+key+" has rep "+bitRepresntaion.getBitRepresentation().toString(10)+" index : "+ index);
         if(key.equals(table[index])){
-           // System.out.println("Key { "+key+" } , Already Mapped.");
+            System.out.println("Square Hash");
+            System.out.println("Key { "+key+" } , Already Mapped.");
             return false;
         }
         if(keys.size() == n){
@@ -143,9 +150,11 @@ public class SquareHash implements HashTable {
             }else{
                 table[index] = key;
 
+
             }
         }
-        //System.out.println("Key { "+key+" } , Inserted Successfully.");
+        System.out.println("Square Hash");
+        System.out.println("Key { "+key+" } , Inserted Successfully.");
         return true;
 
     }
@@ -155,16 +164,29 @@ public class SquareHash implements HashTable {
              BitRepresntaion bitRepresntaion=new BitRepresntaion(key);
              int index=hash(bitRepresntaion);
              if(table[index]==null){
-             //   System.out.println("key "+key +" Not Found .");
+                 System.out.println("Square Hash");
+                System.out.println("key "+key +" Not Found .");
                return false;
              }
-             return table[index].equals(key);
-//             if(!found){
-//                 System.out.println("Index found but with another key value .");
-//             }
-//             else{
-//                 System.out.println("key deleted : "+ key);
-//             }
+             boolean found =  table[index].equals(key);
+             if(!found){
+                 System.out.println("Square Hash");
+                 System.out.println("Index found but with another key value .");
+             }
+             else{
+                 System.out.println("Square Hash");
+                 System.out.println("key deleted : "+ key);
+                 table[index] = null;
+                 int i;
+                 for(i =0;i<keys.size();i++){
+                     if(keys.get(i).getKey().equals(key)){
+                         break;
+                     }
+                 }
+                 keys.remove(i);
+
+             }
+             return found;
     }
     @Override
     public boolean search(String key){
@@ -172,16 +194,19 @@ public class SquareHash implements HashTable {
         BitRepresntaion bitRepresntaion=new BitRepresntaion(key);
         int index=hash(bitRepresntaion);
         if(table[index]==null){
-            //System.out.println("key : "+key+" not found");
+            System.out.println("Square Hash");
+            System.out.println("key : "+key+" not found");
             return false;
         }
 
-        return table[index].equals(key);
-//        if(found){
-//            System.out.println("key : "+key+" found at index "+index);
-//        }else {
-//            System.out.println("key : "+key+" not found");
-//        }
+        boolean found =  table[index].equals(key);
+        System.out.println("Square Hash");
+        if(found){
+            System.out.println("key : "+key+" found at index "+index);
+        }else {
+            System.out.println("key : "+key+" not found");
+        }
+        return found;
 
 
     }
@@ -196,12 +221,14 @@ public class SquareHash implements HashTable {
         int newElement = bitKeys.size();
 
         if(keyList.isEmpty()){
-//            System.out.println("list is empty");
-//            System.out.println("0 inserted");
+            System.out.println("Square Hash");
+            System.out.println("list is empty");
+            System.out.println("0 inserted");
             return false;
         }
         if(newElement + keys.size()> n){
-//            System.out.println("Batch insert will exceed size");
+            System.out.println("Square Hash");
+            System.out.println("Batch insert will exceed size");
             while(keyList.size()+keys.size()> n ){
                 doubleSize();
             }
@@ -214,6 +241,7 @@ public class SquareHash implements HashTable {
             insert(bitNum.getKey());
 
         }
+        System.out.println("Square Hash");
         System.out.println("Number of New Elements added is : "+newElement+" and Number of Old Elements in map is : "+oldElement);
 
      return true;
@@ -236,7 +264,8 @@ public class SquareHash implements HashTable {
     @Override
     public boolean delete(ArrayList<String> keyList){
         if(keyList.isEmpty()){
-//            System.out.println("list is empty");
+            System.out.println("Square Hash");
+           System.out.println("list is empty");
             return false;
         }
         boolean allDeleted = true;
@@ -244,12 +273,14 @@ public class SquareHash implements HashTable {
         for(String key : keyList){
            if (!this.delete(key)) {
                allDeleted = false;
-//               System.out.println("Failed to delete key : "+key);
+               System.out.println("Square Hash");
+               System.out.println("Failed to delete key : "+key);
            }
            else{
                deleted++;
            }
         }
+        System.out.println("Square Hash");
         System.out.println("Success to delete : "+deleted+" Keys.");
         System.out.println("Failed to delete : "+(keyList.size()-deleted)+" Keys.");
 
@@ -279,7 +310,7 @@ public class SquareHash implements HashTable {
     }
     public static void test2(){
         // some times infine loop some times not
-        SquareHash hash = new SquareHash(4);
+        SquareHash hash = new SquareHash(3);
         hash.insert("cat");
         hash.insert("hat");
         hash.insert("sam");
@@ -349,7 +380,10 @@ public class SquareHash implements HashTable {
     }
 
     public static void main(String[] args) {
-
+        System.out.println("====================================================Test1======================================================= ");
+        test1();
+        System.out.println("====================================================Test2======================================================= ");
+        test2();
         System.out.println("====================================================Test3======================================================= ");
         test3();
         System.out.println("====================================================Test4======================================================= ");
@@ -361,7 +395,6 @@ public class SquareHash implements HashTable {
         System.out.println("====================================================Test6======================================================= ");
         test6();
 
-       // System.out.println("test 2");
     }
 
 

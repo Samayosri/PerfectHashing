@@ -50,7 +50,7 @@ public class LinearHashTable implements HashTable {
 
     private void doubleSize(){
         n *=2;
-        //System.out.println("size now doubled  = "+ n);
+        System.out.println("size now doubled  = "+ n);
     }
     public void printHashCode(){
         for(BigInteger b : hashCode){
@@ -82,9 +82,9 @@ public class LinearHashTable implements HashTable {
             hashCode.add(newBig);
         }
         //printHashCode();
-       // System.out.println("first level hash");
-//        System.out.println(n);
-//        System.out.println(tableSize);
+        System.out.println("first level hash");
+        System.out.println(n);
+        System.out.println(tableSize);
     }
 
 
@@ -97,9 +97,12 @@ public class LinearHashTable implements HashTable {
         randomizeHashCode();
         for(BitRepresntaion key : keys){
             int hashed = hash(key);
+            System.out.println("first level hash");
+            System.out.println("Key "+key.getKey()+" has rep "+key.getBitRepresentation().toString(10)+" index : "+ hashed);
             table[hashed].insert(key.getKey());
         }
-//        System.out.println("rehash has just occured size is : "+ n+"number keys = "+keys.size());
+        System.out.println("first level hash");
+        System.out.println("rehash has just occured size is : "+ n+"number keys = "+keys.size());
 
     }
 
@@ -112,8 +115,6 @@ public class LinearHashTable implements HashTable {
             int count=tmpBigInt.bitCount();
             result = (result << 1) | count % 2;
         }
-//        System.out.println("first level hash");
-//        System.out.println("Key "+Bit.getKey()+" has rep "+Bit.getBitRepresentation().toString(10)+" index : "+ result);
         return result;
     }
 
@@ -131,9 +132,11 @@ public class LinearHashTable implements HashTable {
         if(key==null) return false;
         BitRepresntaion bitRepresntaion = new BitRepresntaion(key);
         int index = hash(bitRepresntaion);
+        System.out.println("first level hash");
+        System.out.println("Key "+bitRepresntaion.getKey()+" has rep "+bitRepresntaion.getBitRepresentation().toString(10)+" index : "+ index);
         if(table[index].search(key)){
-//            System.out.println("first level hash");
-//            System.out.println("Key { "+key+" } , Already Mapped.");
+            System.out.println("first level hash");
+            System.out.println("Key { "+key+" } , Already Mapped.");
             return false;
         }
         if(keys.size() == tableSize){
@@ -145,8 +148,8 @@ public class LinearHashTable implements HashTable {
             keys.add(bitRepresntaion);
             table[index].insert(key);
         }
-//        System.out.println("first level hash");
-//        System.out.println("Key { "+key+" } , Inserted Successfully.");
+        System.out.println("first level hash");
+        System.out.println("Key { "+key+" } , Inserted Successfully.");
         return true;
 
     }
@@ -156,13 +159,14 @@ public class LinearHashTable implements HashTable {
         BitRepresntaion bitRepresntaion=new BitRepresntaion(key);
         int index=hash(bitRepresntaion);
         boolean found = table[index].delete(key);
+        System.out.println("first level hash");
         if(!found){
-//            System.out.println("first level hash");
-//            System.out.println("Index found but with another key value .");
+            System.out.println("first level hash");
+            System.out.println("Index found but with another key value .");
         }
         else{
-//            System.out.println("first level hash");
-//            System.out.println("key deleted : "+ key);
+            System.out.println("first level hash");
+           System.out.println("key deleted : "+ key);
         }
         return found;
     }
@@ -171,7 +175,15 @@ public class LinearHashTable implements HashTable {
         if(key==null) return false;
         BitRepresntaion bitRepresntaion=new BitRepresntaion(key);
         int index=hash(bitRepresntaion);
-        return table[index].search(key);
+
+        boolean found =  table[index].search(key);
+        System.out.println("first level hash");
+        if(found){
+            System.out.println("key : "+key+" found at index "+index);
+        }else {
+            System.out.println("key : "+key+" not found");
+        }
+        return found;
 
 
     }
@@ -186,12 +198,14 @@ public class LinearHashTable implements HashTable {
         int newElement = bitKeys.size();
 
         if(keyList.isEmpty()){
-//            System.out.println("list is empty");
-//            System.out.println("0 inserted");
+            System.out.println("first level hash");
+            System.out.println("list is empty");
+            System.out.println("0 inserted");
             return false;
         }
         if(newElement + keys.size()> tableSize){
-            //System.out.println("Batch insert will exceed size");
+            System.out.println("first level hash");
+            System.out.println("Batch insert will exceed size");
             while(keyList.size()+keys.size() > n ){
                 doubleSize();
             }
@@ -204,6 +218,7 @@ public class LinearHashTable implements HashTable {
             insert(bitNum.getKey());
 
         }
+        System.out.println("first level hash");
         System.out.println("Number of New Keys Added Is : "+newElement+" And Number Of Old Keys In Map Is : "+oldElement);
 
         return true;
@@ -226,7 +241,8 @@ public class LinearHashTable implements HashTable {
     @Override
     public boolean delete(ArrayList<String> keyList){
         if(keyList.isEmpty()){
-            //System.out.println("list is empty");
+            System.out.println("first level hash");
+            System.out.println("list is empty");
             return false;
         }
         boolean allDeleted = true;
@@ -234,12 +250,14 @@ public class LinearHashTable implements HashTable {
         for(String key : keyList){
             if (!this.delete(key)) {
                 allDeleted = false;
-               // System.out.println("Failed to delete key : "+key);
+                System.out.println("first level hash");
+                System.out.println("Failed to delete key : "+key);
             }
             else{
                 deleted++;
             }
         }
+        System.out.println("first level hash");
         System.out.println("Success to delete : "+deleted+" Keys.");
         System.out.println("Failed to delete : " +(keyList.size()-deleted)+ " Keys.");
         return allDeleted;
@@ -257,6 +275,7 @@ public class LinearHashTable implements HashTable {
         hash.insert("ziad");
         hash.insert("dog");
         hash.insert("fares");
+
         hash.search("nour");
         hash.search("samaa");
         hash.search("sama");

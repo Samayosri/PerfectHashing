@@ -34,8 +34,8 @@ public class EnglishDictionary {
             while ((line = br.readLine()) != null) {
                 keyList.add(line.trim());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Enter Valid File");
         }
         return  keyList;
     }
