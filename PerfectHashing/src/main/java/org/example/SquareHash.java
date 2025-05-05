@@ -11,7 +11,7 @@ public class SquareHash implements HashTable {
     private int tableSize;
     private ArrayList<BigInteger> hashCode;
 
-    private String[] table;
+    public String[] table;
 
     int row ,col;
     int numberOfRehashing;

@@ -1,14 +1,12 @@
-
+import org.example.LinearHashTable;
 import org.example.SquareHash;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
-public class SquareHashTest {
+public class LinearHashTest {
 
     private Random random;
 
@@ -16,38 +14,7 @@ public class SquareHashTest {
     void setUp() {
         random = new Random();
     }
-    @Test
-    void testCorrectness(){
-        System.out.println("==========================================test for correctness===========================================");
-        SquareHash hash = new SquareHash();
-        ArrayList<String> list = generateRandomStrings(30);
-        System.out.println("check for normal insert");
-        for (String str : list) {
-            hash.insert(str);
-        }
-        for (String str : list) {
-            Assertions.assertTrue(hash.search(str));
-        }
-        System.out.println("check for normal delete");
-        for (String str : list) {
-            Assertions.assertTrue(hash.delete(str));
-        }
-//
-//        for (String str : list) {
-//            Assertions.assertFalse(hash.search(str));
-//        }
 
-            hash.insert(list);
-
-        for (String str : list) {
-            Assertions.assertTrue(hash.search(str));
-        }
-        System.out.println("check for batch delete");
-            Assertions.assertTrue(hash.delete(list));
-
-
-
-    }
     @Test
     void testWithDifferentSizes() {
         System.out.println("==========================================test with different sizes===========================================");
@@ -56,7 +23,7 @@ public class SquareHashTest {
 
         for (int size : sizes) {
             ArrayList<String> list = generateRandomStrings(size);
-            SquareHash hashTable = new SquareHash(100);
+            LinearHashTable hashTable = new LinearHashTable(100);
             long startTime = System.nanoTime();
             for (String str : list) {
                 hashTable.insert(str);
@@ -68,9 +35,9 @@ public class SquareHashTest {
             String  stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
             System.out.println("Size " + size + "  Normal Insert Time: " + stringTime);
             //batch
-            SquareHash hashTable2 = new SquareHash(100);
+            hashTable = new LinearHashTable(100);
             startTime = System.nanoTime();
-            hashTable2.insert(list);
+            hashTable.insert(list);
             endTime = System.nanoTime();
             nanoTime = (endTime - startTime);
             microTime = ((double) (endTime - startTime)) / 10E3;
@@ -85,18 +52,18 @@ public class SquareHashTest {
         System.out.println("==========================================test rehashing===========================================");
 
         ArrayList<String> list = generateRandomStrings(150);
-            SquareHash hashTable = new SquareHash(100);
-            long startTime = System.nanoTime();
-            for (String str : list) {
-                hashTable.insert(str);
-            }
-
-            long endTime = System.nanoTime();
-            double milliTime = ((double) (endTime - startTime)) / 10E6;
-
-            System.out.println("Size is 100 and Insert time: " + milliTime + " ms");
-            System.out.println(" Number of rehashings: " + hashTable.getNumberOfRehashing());
+        LinearHashTable hashTable = new LinearHashTable(100);
+        long startTime = System.nanoTime();
+        for (String str : list) {
+            hashTable.insert(str);
         }
+
+        long endTime = System.nanoTime();
+        double milliTime = ((double) (endTime - startTime)) / 10E6;
+
+        System.out.println("Size is 100 and Insert time: " + milliTime + " ms");
+        System.out.println(" Number of rehashings: " + hashTable.getNumberOfRehashing());
+    }
 
 
     @Test
@@ -105,26 +72,26 @@ public class SquareHashTest {
         int[] sizes = {10, 50, 100, 200, 500};
 
         for (int size : sizes) {
-        ArrayList<String> list = generateRandomStrings(size);
-        SquareHash hashTable = new SquareHash(100);
-        hashTable.insert(list);
-        long startTime = System.nanoTime();
-        for(String str: list){
-            hashTable.search(str);
-        }
-        long endTime = System.nanoTime();
-        long nanoTime = (endTime - startTime);
-        double microTime = ((double) (endTime - startTime)) / 10E3;
-        double milliTime = ((double) (endTime - startTime)) / 10E6;
-        String  stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-        System.out.println("Search time : " + stringTime);
-    }}
+            ArrayList<String> list = generateRandomStrings(size);
+            LinearHashTable hashTable = new LinearHashTable(100);
+            hashTable.insert(list);
+            long startTime = System.nanoTime();
+            for(String str: list){
+                hashTable.search(str);
+            }
+            long endTime = System.nanoTime();
+            long nanoTime = (endTime - startTime);
+            double microTime = ((double) (endTime - startTime)) / 10E3;
+            double milliTime = ((double) (endTime - startTime)) / 10E6;
+            String  stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+            System.out.println("Search time : " + stringTime);
+        }}
 
     @Test
     void testDelete() {
         System.out.println("==========================================test delete===========================================");
         ArrayList<String> list = generateRandomStrings(200);
-        SquareHash hashTable = new SquareHash(250);
+        LinearHashTable hashTable = new LinearHashTable(250);
         hashTable.insert(list);
         ArrayList<String> toDelete = new ArrayList<>(list.subList(0, 50));
         long startTime = System.nanoTime();
@@ -139,7 +106,7 @@ public class SquareHashTest {
         System.out.println("Normal delete time (50 elements): " + stringTime);
 
         //batch delete
-        hashTable = new SquareHash(100);
+        hashTable = new LinearHashTable(100);
         hashTable.insert(list);
         startTime = System.nanoTime();
         hashTable.delete(toDelete);
