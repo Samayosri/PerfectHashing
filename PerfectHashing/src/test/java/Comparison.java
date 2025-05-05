@@ -20,8 +20,8 @@ public class Comparison {
             System.out.println("==========================================test with different sizes===========================================");
 
             int[] sizes = {10, 50, 100, 200, 500};
-            double  milliTime=0,microTime=0;
-            long nanoTime=0;
+            double milliTime = 0, microTime = 0;
+            long nanoTime = 0;
             System.out.println("=============For N^2============");
             for (int size : sizes) {
                 ArrayList<String> list = generateRandomStrings(size);
@@ -31,16 +31,14 @@ public class Comparison {
                     hashTable.insert(str);
                 }
                 long endTime = System.nanoTime();
-                nanoTime += (endTime - startTime);
-                microTime += ((double) (endTime - startTime)) / 10E3;
-                milliTime += ((double) (endTime - startTime)) / 10E6;
+                nanoTime = (endTime - startTime);
+                microTime = ((double) (endTime - startTime)) / 10E3;
+                milliTime = ((double) (endTime - startTime)) / 10E6;
                 String stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
                 System.out.println("Size " + size + "  Normal Insert Time: " + stringTime);
             }
 
-            nanoTime/=sizes.length;microTime/= sizes.length;milliTime/=sizes.length;
-            String stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-            System.out.println(" mean Normal Insert Time:(Squared) " + stringTime);
+
             System.out.println("=============For N============");
             for (int size : sizes) {
                 ArrayList<String> list = generateRandomStrings(size);
@@ -50,20 +48,18 @@ public class Comparison {
                     hashTable.insert(str);
                 }
                 long endTime = System.nanoTime();
-                nanoTime += (endTime - startTime);
-                microTime += ((double) (endTime - startTime)) / 10E3;
-                milliTime += ((double) (endTime - startTime)) / 10E6;
-                stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+                nanoTime = (endTime - startTime);
+                microTime = ((double) (endTime - startTime)) / 10E3;
+                milliTime = ((double) (endTime - startTime)) / 10E6;
+                String stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
                 System.out.println("Size " + size + "  Normal Insert Time: " + stringTime);
             }
 
-            nanoTime/=sizes.length;microTime/= sizes.length;milliTime/=sizes.length;
-            stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-            System.out.println(" mean Normal Insert Time: (LINEAR)" + stringTime);
-
             //batch
             System.out.println("=============For N^2============");
-            milliTime=0;microTime=0;milliTime=0;
+            milliTime = 0;
+            microTime = 0;
+            milliTime = 0;
             for (int size : sizes) {
 
                 ArrayList<String> list = generateRandomStrings(size);
@@ -75,11 +71,8 @@ public class Comparison {
                 microTime = ((double) (endTime - startTime)) / 10E3;
                 milliTime = ((double) (endTime - startTime)) / 10E6;
                 String stringTime2 = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-                System.out.println("Size " + size + "  Normal Insert Time: " + stringTime2);
+                System.out.println("Size " + size + "  Batch Insert Time: " + stringTime2);
             }
-            nanoTime/=sizes.length;microTime/= sizes.length;milliTime/=sizes.length;
-            String stringTime2 = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-            System.out.println(" mean Batch Insert Time: " + stringTime2);
             System.out.println("=============For N============");
             for (int size : sizes) {
 
@@ -91,12 +84,9 @@ public class Comparison {
                 nanoTime = (endTime - startTime);
                 microTime = ((double) (endTime - startTime)) / 10E3;
                 milliTime = ((double) (endTime - startTime)) / 10E6;
-                 stringTime2 = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-                System.out.println("Size " + size + "  Normal Insert Time: " + stringTime2);
+                String stringTime2 = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+                System.out.println("Size " + size + "  Batch Insert Time: " + stringTime2);
             }
-            nanoTime/=sizes.length;microTime/= sizes.length;milliTime/=sizes.length;
-             stringTime2 = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
-            System.out.println(" mean Batch Insert Time: " + stringTime2);
         }
 
         @Test
@@ -136,7 +126,6 @@ public class Comparison {
     void testSearch() {
         System.out.println("==========================================test search===========================================");
         int[] sizes = {10, 50, 100, 200, 500};
-        double totalMilliTimeSquare = 0, totalMilliTimeLinear = 0;
 
         for (int size : sizes) {
             ArrayList<String> list = generateRandomStrings(size);
@@ -153,7 +142,7 @@ public class Comparison {
             long nanoTime = (endTime - startTime);
             double microTime = ((double) (endTime - startTime)) / 10E3;
             double milliTime = ((double) (endTime - startTime)) / 10E6;
-            totalMilliTimeSquare += milliTime;
+
             String stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
             System.out.println("Size " + size + " - N² Search time: " + stringTime);
 
@@ -169,19 +158,13 @@ public class Comparison {
             nanoTime = (endTime - startTime);
             microTime = ((double) (endTime - startTime)) / 10E3;
             milliTime = ((double) (endTime - startTime)) / 10E6;
-            totalMilliTimeLinear += milliTime;
+
             stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
             System.out.println("Size " + size + " - Linear Search time: " + stringTime);
 
         }
 
-        // Calculate and print mean times
-        double meanMilliTimeSquare = totalMilliTimeSquare / sizes.length;
-        double meanMilliTimeLinear = totalMilliTimeLinear / sizes.length;
 
-        System.out.println("Mean N² Search time: " + meanMilliTimeSquare + " ms");
-        System.out.println("Mean Linear Search time: " + meanMilliTimeLinear + " ms");
-        System.out.println("Performance ratio (Linear/N²): " + (meanMilliTimeLinear / meanMilliTimeSquare));
     }
 
         @Test
