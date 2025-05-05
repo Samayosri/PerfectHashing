@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public interface HashTable {
 
+    public int getNumberOfRehashing();
+
     public boolean insert(String key);
     public boolean delete(String key);
     public boolean search(String key);
