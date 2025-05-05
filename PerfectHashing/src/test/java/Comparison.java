@@ -19,7 +19,7 @@ public class Comparison {
         void testWithDifferentSizes() {
             System.out.println("==========================================test with different sizes===========================================");
 
-            int[] sizes = {10, 50, 100, 200, 500};
+            int[] sizes = {10, 50, 100, 200, 500,1000};
             double milliTime = 0, microTime = 0;
             long nanoTime = 0;
             System.out.println("=============For N^2============");
@@ -93,29 +93,39 @@ public class Comparison {
         void compareHashing() {
             System.out.println("==========================================compare rehashing===========================================");
 
-            ArrayList<String> list = generateRandomStrings(1000);
-            SquareHash hashTable = new SquareHash(100);
-            long startTime = System.nanoTime();
-            for (String str : list) {
-                hashTable.insert(str);
+
+            int[] sizes = {10, 50, 100, 200, 500,1000};
+
+            for(int size : sizes){
+
+                ArrayList<String> list = generateRandomStrings(size);
+                SquareHash hashTable = new SquareHash(100);
+                long startTime = System.nanoTime();
+                for (String str : list) {
+                    hashTable.insert(str);
+                }
+
+                long endTime = System.nanoTime();
+                double milliTime = ((double) (endTime - startTime)) / 10E6;
+                System.out.println("==========For N^2=========");
+                System.out.println("Insert time: (size "+ size +") " + milliTime + " ms");
+                System.out.println(" Number of rehashings: " + hashTable.getNumberOfRehashing());
+                System.out.println("==========For N=========");
+                LinearHashTable hashTable2 = new LinearHashTable(100);
+                startTime = System.nanoTime();
+                for (String str : list) {
+                    hashTable2.insert(str);
+                }
+
+                endTime = System.nanoTime();
+                milliTime = ((double) (endTime - startTime)) / 10E6;
+                System.out.println("Insert time: (size "+ size +") " + milliTime + " ms");
+                System.out.println(" Number of rehashings: " + hashTable2.getNumberOfRehashing());
             }
 
-            long endTime = System.nanoTime();
-            double milliTime = ((double) (endTime - startTime)) / 10E6;
-            System.out.println("==========For N^2=========");
-            System.out.println("Insert time: (size 1000) " + milliTime + " ms");
-            System.out.println(" Number of rehashings: " + hashTable.getNumberOfRehashing());
-            System.out.println("==========For N=========");
-            LinearHashTable hashTable2 = new LinearHashTable(100);
-            startTime = System.nanoTime();
-            for (String str : list) {
-                hashTable2.insert(str);
-            }
 
-             endTime = System.nanoTime();
-             milliTime = ((double) (endTime - startTime)) / 10E6;
-            System.out.println("Insert time: (size 1000) " + milliTime + " ms");
-            System.out.println(" Number of rehashings: " + hashTable2.getNumberOfRehashing());
+
+
 
         }
 

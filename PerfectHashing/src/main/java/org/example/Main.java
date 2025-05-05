@@ -13,12 +13,8 @@ public class Main {
         byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
 
         BigInteger bigInteger = new BigInteger(bytes);
-
-
-
         System.out.println(bigInteger.toString(2));
 
-        System.out.println("Hello, World!");
 
 
     }

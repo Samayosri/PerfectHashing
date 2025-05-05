@@ -145,7 +145,6 @@ public class SquareHash implements HashTable {
 
             }
         }
-        //System.out.println("Key { "+key+" } , Inserted Successfully.");
         return true;
 
     }
@@ -158,13 +157,19 @@ public class SquareHash implements HashTable {
              //   System.out.println("key "+key +" Not Found .");
                return false;
              }
-             return table[index].equals(key);
-//             if(!found){
-//                 System.out.println("Index found but with another key value .");
-//             }
-//             else{
-//                 System.out.println("key deleted : "+ key);
-//             }
+             boolean found =  table[index].equals(key);
+             if(found){
+                 table[index] = null;
+                 int i;
+                 for(i = 0;i< keys.size();i++){
+                     if(keys.get(i).getKey().equals(key)){
+                         break;
+                     }
+                 }
+                 keys.remove(i);
+             }
+
+            return found;
     }
     @Override
     public boolean search(String key){
@@ -177,11 +182,6 @@ public class SquareHash implements HashTable {
         }
 
         return table[index].equals(key);
-//        if(found){
-//            System.out.println("key : "+key+" found at index "+index);
-//        }else {
-//            System.out.println("key : "+key+" not found");
-//        }
 
 
     }
@@ -349,7 +349,10 @@ public class SquareHash implements HashTable {
     }
 
     public static void main(String[] args) {
-
+        System.out.println("====================================================Test1======================================================= ");
+        test1();
+        System.out.println("====================================================Test2======================================================= ");
+        test2();
         System.out.println("====================================================Test3======================================================= ");
         test3();
         System.out.println("====================================================Test4======================================================= ");
