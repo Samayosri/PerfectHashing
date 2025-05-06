@@ -23,6 +23,33 @@ public class LinearHashTable implements HashTable {
 
     int row ,col;
 
+    public ArrayList<BitRepresntaion> getKeys() {
+        return keys;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public int getTableSize() {
+        return tableSize;
+    }
+
+    public ArrayList<BigInteger> getHashCode() {
+        return hashCode;
+    }
+
+    public SquareHash[] getTable() {
+        return table;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 
     public LinearHashTable(int n) {
         this.n = n;

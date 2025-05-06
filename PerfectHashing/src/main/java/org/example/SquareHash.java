@@ -16,6 +16,21 @@ public class SquareHash implements HashTable {
     int row ,col;
     int numberOfRehashing;
 
+    public ArrayList<BitRepresntaion> getKeys() {
+        return keys;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+    public int getTableSize() {
+        return tableSize;
+    }
+
+    public ArrayList<BigInteger> getHashCode() {
+        return hashCode;
+    }
 
     public SquareHash(int n) {
         this.n = n;
