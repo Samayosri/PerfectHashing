@@ -1,5 +1,6 @@
 import org.example.LinearHashTable;
 import org.example.SquareHash;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,44 @@ public class LinearHashTest {
     @BeforeEach
     void setUp() {
         random = new Random();
+    }
+
+
+    @Test
+    void testCorrectness(){
+        System.out.println("==========================================test for correctness===========================================");
+        LinearHashTable hash = new LinearHashTable();
+        ArrayList<String> list = generateRandomStrings(30);
+        System.out.println("check for normal insert");
+        for (String str : list) {
+            hash.insert(str);
+        }
+        for (String str : list) {
+            Assertions.assertTrue(hash.search(str));
+        }
+        System.out.println("check for normal delete");
+        for (String str : list) {
+            Assertions.assertTrue(hash.delete(str));
+        }
+
+        for (String str : list) {
+            Assertions.assertFalse(hash.search(str));
+        }
+
+        hash.insert(list);
+
+        for (String str : list) {
+            Assertions.assertTrue(hash.search(str));
+        }
+        System.out.println("check for batch delete");
+        Assertions.assertTrue(hash.delete(list));
+
+        for (String str : list) {
+            Assertions.assertFalse(hash.search(str));
+        }
+
+
+
     }
 
     @Test
@@ -46,6 +85,34 @@ public class LinearHashTest {
             System.out.println("Size " + size + "  Batch Insert Time: " + stringTime);
         }
     }
+
+    @Test
+    void largeSize(){
+        int size = 1000000;
+        ArrayList<String> list = generateRandomStrings(size);
+        LinearHashTable hashTable = new LinearHashTable(100);
+        long startTime = System.nanoTime();
+        for (String str : list) {
+            hashTable.insert(str);
+        }
+        long endTime = System.nanoTime();
+        long nanoTime = (endTime - startTime);
+        double microTime = ((double) (endTime - startTime)) / 10E3;
+        double milliTime = ((double) (endTime - startTime)) / 10E6;
+        String  stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+        System.out.println("Size " + size + "  Normal Insert Time: " + stringTime);
+        //batch
+        hashTable = new LinearHashTable(100);
+        startTime = System.nanoTime();
+        hashTable.insert(list);
+        endTime = System.nanoTime();
+        nanoTime = (endTime - startTime);
+        microTime = ((double) (endTime - startTime)) / 10E3;
+        milliTime = ((double) (endTime - startTime)) / 10E6;
+        stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+        System.out.println("Size " + size + "  Batch Insert Time: " + stringTime);
+    }
+
 
     @Test
     void testRehashing() {

@@ -20,7 +20,7 @@ public class SquareHashTest {
     void testCorrectness(){
         System.out.println("==========================================test for correctness===========================================");
         SquareHash hash = new SquareHash();
-        ArrayList<String> list = generateRandomStrings(30);
+        ArrayList<String> list = generateRandomStrings(1000);
         System.out.println("check for normal insert");
         for (String str : list) {
             hash.insert(str);
@@ -32,10 +32,10 @@ public class SquareHashTest {
         for (String str : list) {
             Assertions.assertTrue(hash.delete(str));
         }
-//
-//        for (String str : list) {
-//            Assertions.assertFalse(hash.search(str));
-//        }
+
+        for (String str : list) {
+            Assertions.assertFalse(hash.search(str));
+        }
 
             hash.insert(list);
 
@@ -43,9 +43,10 @@ public class SquareHashTest {
             Assertions.assertTrue(hash.search(str));
         }
         System.out.println("check for batch delete");
-            Assertions.assertTrue(hash.delete(list));
-
-
+        Assertions.assertTrue(hash.delete(list));
+        for (String str : list) {
+            Assertions.assertFalse(hash.search(str));
+        }
 
     }
     @Test
@@ -79,6 +80,34 @@ public class SquareHashTest {
             System.out.println("Size " + size + "  Batch Insert Time: " + stringTime);
         }
     }
+
+    @Test
+    void largeSize(){
+        int size = 5000;
+        ArrayList<String> list = generateRandomStrings(size);
+        SquareHash hashTable = new SquareHash(100);
+        long startTime = System.nanoTime();
+        for (String str : list) {
+            hashTable.insert(str);
+        }
+        long endTime = System.nanoTime();
+        long nanoTime = (endTime - startTime);
+        double microTime = ((double) (endTime - startTime)) / 10E3;
+        double milliTime = ((double) (endTime - startTime)) / 10E6;
+        String  stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+        System.out.println("Size " + size + "  Normal Insert Time: " + stringTime);
+        //batch
+//        SquareHash hashTable2 = new SquareHash(100);
+//        startTime = System.nanoTime();
+//        hashTable2.insert(list);
+//        endTime = System.nanoTime();
+//        nanoTime = (endTime - startTime);
+//        microTime = ((double) (endTime - startTime)) / 10E3;
+//        milliTime = ((double) (endTime - startTime)) / 10E6;
+//        stringTime = "{" + nanoTime + " ns, " + microTime + " micro, " + milliTime + " ms}";
+//        System.out.println("Size " + size + "  Batch Insert Time: " + stringTime);
+    }
+
 
     @Test
     void testRehashing() {
