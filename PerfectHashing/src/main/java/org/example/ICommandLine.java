@@ -3,7 +3,30 @@ package org.example;
 import java.util.Scanner;
 
 public class ICommandLine {
- public static void main(String[] args) {
+    private String getKey(int list , int input){
+        String result="";
+        if(list==1) {
+            switch (input) {
+                case 1:
+                    result = "exit";
+                    break;
+                case 2:
+                    result = "square";
+                    break;
+                case 3:
+                    result = "linear";
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+        return result;
+
+    }
+
+ public void run() {
      boolean exit = false;
      Scanner scanner = new Scanner(System.in);
 
@@ -12,7 +35,17 @@ public class ICommandLine {
          System.out.println("2 - Enter (square) for Square Hash Table .");
          System.out.println("3 - Enter (linear) for Linear Hash Table .");
          System.out.print("Enter Command :  ");
-      String input = scanner.nextLine();
+         int inputInt=0;
+         try{
+             inputInt = Integer.parseInt(scanner.nextLine());
+         }
+         catch(Exception e){
+             System.out.println("ENTER VALID INTEGER !!");
+
+         }
+
+          String input=this.getKey(1,inputInt);
+
       if(input.equalsIgnoreCase("exit")){
           exit = true ;
       }
@@ -26,8 +59,8 @@ public class ICommandLine {
           System.out.println("5 - Enter (batchDelete) then FILE PATH to delete batch keys .");
           System.out.println("6 - Enter (batchInsert) then FILE PATH to insert batch keys .");
           do{
-
               System.out.print("Enter Command :  ");
+
               String innerIn = scanner.nextLine();
               String[] parts = innerIn.split(" ");
               String innerInput="",key="";
@@ -86,7 +119,7 @@ public class ICommandLine {
 
 
               else{
-                  System.out.println("Unknown command !" );
+                  System.out.println("Unknown Key !" );
               }
 
 
@@ -102,6 +135,11 @@ public class ICommandLine {
 
      }while(!exit);
 
+
+}
+public static void main(String[] args){
+        ICommandLine iCommandLine=new ICommandLine();
+        iCommandLine.run();
 
 }
 }
